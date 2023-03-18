@@ -2,14 +2,22 @@ package com.euce.dessert.model;
 
 import com.euce.dessert.model.address.Address;
 import javax.persistence.*;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Entity
+@Builder
 @Table(name="manufacturers")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Manufacturer implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,7 +35,7 @@ public class Manufacturer implements Serializable {
     @Column(name = "description")
     private String description;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "manufacturers_addresses",
             joinColumns = {
@@ -37,5 +45,5 @@ public class Manufacturer implements Serializable {
                     @JoinColumn(name = "address_id")
             }
     )
-    private List<Address> addressList;
+    private Set<Address> addresses = new HashSet<>();
 }

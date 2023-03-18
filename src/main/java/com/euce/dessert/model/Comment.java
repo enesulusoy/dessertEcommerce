@@ -3,13 +3,19 @@ package com.euce.dessert.model;
 import javax.persistence.*;
 
 import com.euce.dessert.model.account.User;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
 @Data
 @Entity
+@Builder
 @Table(name="comments")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Comment implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

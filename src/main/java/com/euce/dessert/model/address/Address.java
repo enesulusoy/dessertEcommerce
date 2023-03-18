@@ -3,14 +3,22 @@ package com.euce.dessert.model.address;
 import com.euce.dessert.model.Manufacturer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Entity
+@Builder
 @Table(name="addresses")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Address implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,7 +47,7 @@ public class Address implements Serializable {
     @JoinColumn(name = "country_id")
     private Country country;
 
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "addressList")
+    @ManyToMany(mappedBy = "addresses")
     @JsonIgnore
-    private List<Manufacturer> manufacturerList;
+    private Set<Manufacturer> manufacturers = new HashSet<>();
 }

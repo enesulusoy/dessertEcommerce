@@ -4,7 +4,9 @@ import javax.persistence.*;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
@@ -57,8 +59,8 @@ public class Country implements Serializable {
     private Integer longitude;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "country")
-    private List<Address> addressList;
+    private Set<Address> addresses = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "country")
-    private List<City> cityList;
+    private Set<City> cities = new HashSet<>();
 }

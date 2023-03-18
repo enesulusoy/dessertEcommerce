@@ -2,14 +2,23 @@ package com.euce.dessert.model;
 
 import com.euce.dessert.model.constant.NotificationType;
 import javax.persistence.*;
+
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
+
 import java.io.Serializable;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Entity
+@Builder
 @Table(name="brands")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Brand implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,5 +41,5 @@ public class Brand implements Serializable {
     private String description;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "brand")
-    private List<Product> productList;
+    private Set<Product> products = new HashSet<>();
 }

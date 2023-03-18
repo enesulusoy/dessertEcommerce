@@ -1,5 +1,6 @@
 package com.euce.dessert.controller;
 
+import com.euce.dessert.dto.ProductDto;
 import com.euce.dessert.model.Product;
 import com.euce.dessert.service.ProductService;
 import javax.validation.Valid;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("products")
+@RequestMapping("/products")
 public class ProductController {
 
     private ProductService productService;
@@ -21,33 +22,44 @@ public class ProductController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Product>> getProduct() {
+    public ResponseEntity<List<Product>> getAllProducts() {
         List<Product> productList = productService.getProducts();
         return ResponseEntity.ok(productList);
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/categories/{categoryId}")
+    public ResponseEntity<List<Product>> getAllProductsByCategoryId(@PathVariable(value = "categoryId") Long categoryId) {
+        List<Product> productList = productService.getProducts();
+        return ResponseEntity.ok(productList);
+    }
+
+    @GetMapping("/brands/{brandId}")
+    public ResponseEntity<List<Product>> getAllProductsByBrandId(@PathVariable(value = "brandId") Long brandId) {
+        List<Product> productList = productService.getProducts();
+        return ResponseEntity.ok(productList);
+    }
+
+    @GetMapping("/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable Long id) {
         Product product = productService.getProduct(id);
         return ResponseEntity.ok(product);
     }
 
     @PostMapping
-    public ResponseEntity<Product> createProduct(@Valid @RequestBody Product productDto) {
+    public ResponseEntity<String> createProduct(@Valid @RequestBody ProductDto productDto) {
         Product product =  productService.saveProduct(productDto);
-        return ResponseEntity.ok(product);
+        return ResponseEntity.ok("Product Created Successfully");
     }
 
-    @PutMapping("{id}")
-    public ResponseEntity<Product> updateProduct(@PathVariable Long id, @Valid @RequestBody Product productDto) {
+    @PutMapping("/{id}")
+    public ResponseEntity<String> updateProduct(@PathVariable Long id, @Valid @RequestBody ProductDto productDto) {
         Product product = productService.updateProduct(id, productDto);
-        return ResponseEntity.ok(product);
+        return ResponseEntity.ok("Product Updated Successfully");
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteProduct(@PathVariable Long id) {
         productService.deleteProduct(id);
         return ResponseEntity.ok("Product Deleted Successfully");
     }
-
 }

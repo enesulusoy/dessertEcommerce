@@ -6,7 +6,8 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Entity
@@ -17,10 +18,14 @@ public class Privilege implements Serializable {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "name", nullable = false)
+    @Column(name = "privilege", nullable = false)
     private PrivilegeType privilegeType;
 
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "privilegeList")
+    @ManyToMany(mappedBy = "privileges")
     @JsonIgnore
-    private List<Role> roleList;
+    private Set<Role> roles = new HashSet<>();
+
+    @ManyToMany(mappedBy = "privileges")
+    @JsonIgnore
+    private Set<Group> groups = new HashSet<>();
 }

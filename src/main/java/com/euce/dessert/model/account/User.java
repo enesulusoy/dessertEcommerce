@@ -1,16 +1,23 @@
 package com.euce.dessert.model.account;
 
 import com.euce.dessert.model.Comment;
-import com.euce.dessert.model.account.Role;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
+@Builder
 @Table(name="users")
+@NoArgsConstructor
+@AllArgsConstructor
 public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,9 +51,21 @@ public class User implements Serializable {
     private String birthday;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private List<Comment> commentList;
+    private Set<Comment> comments = new HashSet<>();
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "users_groups",
+            joinColumns = {
+                    @JoinColumn(name = "user_id")
+            },
+            inverseJoinColumns = {
+                    @JoinColumn(name = "group_id")
+            }
+    )
+    private Set<Group> groups = new HashSet<>();
+
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "users_roles",
             joinColumns = {
@@ -56,5 +75,5 @@ public class User implements Serializable {
                     @JoinColumn(name = "role_id")
             }
     )
-    private List<Role> roleList;
+    private Set<Role> roles = new HashSet<>();
 }

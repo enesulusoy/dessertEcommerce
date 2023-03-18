@@ -11,7 +11,7 @@ public class EmailNotificationStrategy implements NotificationStrategy {
     }
     @Override
     public void sendNotification(Product product) {
-        String message = "Stokta bulunmayan bir ürün için bildirim: " + product.getName();
-        emailService.sendEmail(product.getBrand().getEmail(), "Stokta bulunmayan ürün", message);
+        String message = "Notification for a product out of stock: " + product.getName();
+        emailService.sendEmail(product.getBrand().getEmail(), "Out of stock product", message);
     }
 }

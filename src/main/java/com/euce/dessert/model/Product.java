@@ -1,14 +1,22 @@
 package com.euce.dessert.model;
 
 import javax.persistence.*;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Entity
+@Builder
 @Table(name="products")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Product implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,6 +55,5 @@ public class Product implements Serializable {
     private Category category;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
-    private List<Comment> commentList;
-
+    private Set<Comment> comments = new HashSet<>();
 }

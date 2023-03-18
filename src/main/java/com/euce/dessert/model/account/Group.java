@@ -1,35 +1,32 @@
 package com.euce.dessert.model.account;
 
-import com.euce.dessert.model.constant.RoleType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 @Data
 @Entity
-@Table(name="roles")
-public class Role implements Serializable {
+@Table(name="groups")
+public class Group {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "role", nullable = false)
-    private RoleType roleType;
+    @Column(name = "name", nullable = false)
+    private String name;
 
-    @ManyToMany(mappedBy = "roles")
+    @ManyToMany(mappedBy = "groups")
     @JsonIgnore
     private Set<User> users = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name = "roles_privileges",
+            name = "groups_privileges",
             joinColumns = {
-                    @JoinColumn(name = "role_id")
+                    @JoinColumn(name = "group_id")
             },
             inverseJoinColumns = {
                     @JoinColumn(name = "privilege_id")
