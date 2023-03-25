@@ -27,18 +27,6 @@ public class ProductController {
         return ResponseEntity.ok(productList);
     }
 
-    @GetMapping("/categories/{categoryId}")
-    public ResponseEntity<List<Product>> getAllProductsByCategoryId(@PathVariable(value = "categoryId") Long categoryId) {
-        List<Product> productList = productService.getProducts();
-        return ResponseEntity.ok(productList);
-    }
-
-    @GetMapping("/brands/{brandId}")
-    public ResponseEntity<List<Product>> getAllProductsByBrandId(@PathVariable(value = "brandId") Long brandId) {
-        List<Product> productList = productService.getProducts();
-        return ResponseEntity.ok(productList);
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable Long id) {
         Product product = productService.getProduct(id);

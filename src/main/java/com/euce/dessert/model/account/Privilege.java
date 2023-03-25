@@ -18,8 +18,8 @@ public class Privilege implements Serializable {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "privilege", nullable = false)
-    private PrivilegeType privilegeType;
+    @Column(name = "name", nullable = false)
+    private PrivilegeType name;
 
     @ManyToMany(mappedBy = "privileges")
     @JsonIgnore

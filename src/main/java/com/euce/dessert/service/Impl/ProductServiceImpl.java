@@ -35,9 +35,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product saveProduct(ProductDto productDto) {
-        List<Brand> brandList = brandRepository.findByName(productDto.getCategory());
-        List<Category> categoryList = categoryRepository.findByName(productDto.getCategory());
-        if (brandList.isEmpty() || categoryList.isEmpty()) {
+        List<Brand> brands = brandRepository.findByName(productDto.getCategory());
+        List<Category> categories = categoryRepository.findByName(productDto.getCategory());
+        if (brands.isEmpty() || categories.isEmpty()) {
             throw new ResourceNotFoundException("No Such Brand or Category Exists");
         }
         if (!productRepository.findByName(productDto.getName()).isEmpty()) {
@@ -53,8 +53,8 @@ public class ProductServiceImpl implements ProductService {
                 .size(productDto.getSize())
                 .material(productDto.getMaterial())
                 .stockQuantity(productDto.getStockQuantity())
-                .brand(brandList.get(0))
-                .category(categoryList.get(0))
+                .brand(brands.get(0))
+                .category(categories.get(0))
                 .build();
 
         return productRepository.save(product);

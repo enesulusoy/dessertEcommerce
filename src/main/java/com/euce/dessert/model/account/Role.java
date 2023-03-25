@@ -18,8 +18,8 @@ public class Role implements Serializable {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "role", nullable = false)
-    private RoleType roleType;
+    @Column(name = "name", nullable = false)
+    private RoleType name;
 
     @ManyToMany(mappedBy = "roles")
     @JsonIgnore

@@ -32,6 +32,12 @@ public class User implements Serializable {
     @Column(name = "lastname", nullable = false)
     private String lastname;
 
+    @Column(name = "username", nullable = false)
+    private String username;
+
+    @Column(name = "password", nullable = false)
+    private String password;
+
     @Column(name = "email", nullable = false)
     private String email;
 
@@ -41,29 +47,11 @@ public class User implements Serializable {
     @Column(name = "gender", nullable = false)
     private String gender;
 
-    @Column(name = "username", nullable = false)
-    private String username;
-
-    @Column(name = "password", nullable = false)
-    private String password;
-
     @Column(name = "birthday", nullable = false)
     private String birthday;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private Set<Comment> comments = new HashSet<>();
-
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "users_groups",
-            joinColumns = {
-                    @JoinColumn(name = "user_id")
-            },
-            inverseJoinColumns = {
-                    @JoinColumn(name = "group_id")
-            }
-    )
-    private Set<Group> groups = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -76,4 +64,16 @@ public class User implements Serializable {
             }
     )
     private Set<Role> roles = new HashSet<>();
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "users_groups",
+            joinColumns = {
+                    @JoinColumn(name = "user_id")
+            },
+            inverseJoinColumns = {
+                    @JoinColumn(name = "group_id")
+            }
+    )
+    private Set<Group> groups = new HashSet<>();
 }
