@@ -3,10 +3,9 @@ package com.euce.dessert.model;
 import com.euce.dessert.model.address.Address;
 import javax.persistence.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -14,10 +13,9 @@ import java.util.Set;
 
 @Data
 @Entity
-@Builder
 @Table(name="manufacturers")
-@NoArgsConstructor
-@AllArgsConstructor
+@SQLDelete(sql = "UPDATE manufacturers SET deleted=true WHERE id=?")
+@Where(clause = "deleted = false")
 public class Manufacturer implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,7 +33,10 @@ public class Manufacturer implements Serializable {
     @Column(name = "description")
     private String description;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @Column(name = "deleted")
+    private Boolean deleted;
+
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "manufacturers_addresses",
             joinColumns = {

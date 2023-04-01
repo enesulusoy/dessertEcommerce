@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/login")
+@RequestMapping("/auth")
 public class AuthController {
     private final JwtManager jwtManager;
     private final JwtProvider jwtProvider;
@@ -43,7 +43,7 @@ public class AuthController {
         this.authService = authService;
     }
 
-    @PostMapping
+    @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody JwtRequest jwtRequest) throws Exception {
         try {
             User user = authService.login(jwtRequest);

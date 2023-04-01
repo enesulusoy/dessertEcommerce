@@ -1,0 +1,120 @@
+/* Organization Add */
+INSERT INTO groups
+    (name, description, deleted)
+VALUES ("CUSTOMER", "People who make purchases", false);
+
+INSERT INTO groups
+    (name, description, deleted)
+VALUES ("STORE", "Stores selling products on the site", false);
+
+INSERT INTO groups
+    (name, description, deleted)
+VALUES ("BRAND", "Companies from which stores demand their missing products", false);
+
+INSERT INTO groups
+    (name, description, deleted)
+VALUES ("SHIPPER", "Shippers used to ship manufacturers' requested products", false);
+
+INSERT INTO groups
+    (name, description, deleted)
+VALUES ("MANUFACTURER", "Manufacturers from which companies supply their missing products", false);
+
+INSERT INTO groups
+    (name, description, deleted)
+VALUES ("SYSTEM", "Group of System application users", false);
+
+
+
+/* Role Add */
+INSERT INTO roles
+    (name, description, deleted)
+VALUES ("ADMIN", "Application administrator", false);
+
+INSERT INTO roles
+    (name, description, deleted)
+VALUES ("MANAGER", "Chief executives of companies", false);
+
+INSERT INTO roles
+    (name, description, deleted)
+VALUES ("ASSISTANT", "Assistant is missing some permissions close to managers", false);
+
+INSERT INTO roles
+    (name, description, deleted)
+VALUES ("STAFF", "Staff is found in regular employee rosters", false);
+
+INSERT INTO roles
+    (name, description, deleted)
+VALUES ("USER", "User is the group that customers belong to", false);
+
+
+
+/* Privilege Add */
+INSERT INTO privileges
+    (name, description, deleted)
+VALUES ("EMPLOYEE_DELETE", "Allows to delete employee", false);
+
+INSERT INTO privileges
+    (name, description, deleted)
+VALUES ("EMPLOYEE_CREATE", "Allows to create employee", false);
+
+INSERT INTO privileges
+    (name, description, deleted)
+VALUES ("EMPLOYEE_VIEW", "Allows to view employee", false);
+
+INSERT INTO privileges
+    (name, description, deleted)
+VALUES ("PRODUCT_DELETE", "Allows to delete product", false);
+
+INSERT INTO privileges
+    (name, description, deleted)
+VALUES ("PRODUCT_CREATE", "Allows to create product", false);
+
+INSERT INTO privileges
+    (name, description, deleted)
+VALUES ("PRODUCT_VIEW", "Allows to view product", false);
+
+INSERT INTO privileges
+    (name, description, deleted)
+VALUES ("BRAND_DELETE", "Allows to delete brand", false);
+
+INSERT INTO privileges
+    (name, description, deleted)
+VALUES ("BRAND_CREATE", "Allows to create brand", false);
+
+INSERT INTO privileges
+    (name, description, deleted)
+VALUES ("CATEGORY_DELETE", "Allows to delete category", false);
+
+INSERT INTO privileges
+    (name, description, deleted)
+VALUES ("CATEGORY_CREATE", "Allows to create category", false);
+
+
+
+/* Roles - Groups */
+INSERT INTO groups_roles
+    (group_id, role_id)
+VALUES (1, 1);
+
+INSERT INTO roles_groups
+    (group_id, role_id)
+VALUES (1, 2);
+
+
+
+/* Roles - Privileges */
+INSERT INTO roles_privileges
+    (role_id, privilege_id)
+VALUES (1, 1);
+
+INSERT INTO roles_privileges
+    (role_id, privilege_id)
+VALUES (1, 2);
+
+
+
+/* User Add */
+INSERT INTO users_entity
+    (first_name, last_name, username, email, password, phone_number, address, deleted, organization_id)
+VALUES ("admin", "admin", "admin", "admin@gmail.com", "$2a$10$N4o.niQcN5JdOD.UkxCT..WF8RvqDzvRU1JUq2eOkRzHedPvU6waG",
+        "000", "IntelProbe", false, 1);

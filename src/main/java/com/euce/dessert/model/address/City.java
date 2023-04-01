@@ -5,7 +5,6 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Data
@@ -29,6 +28,6 @@ public class City implements Serializable {
     @JoinColumn(name = "country_id")
     private Country country;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "city")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "city")
     private Set<Address> addresses = new HashSet<>();
 }

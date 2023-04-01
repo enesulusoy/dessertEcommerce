@@ -14,7 +14,6 @@ import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -47,9 +46,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User saveUser(UserDto userDto) {
-        Set<Role> roles = (Set<Role>) roleRepository.findByName(userDto.getRole());
-        Set<Group> groups = (Set<Group>) groupRepository.findByName(userDto.getGroup());
-        if (roles.isEmpty() || groups.isEmpty()) {
+        Role role = roleRepository.findByName(userDto.getRole());
+        Group group =  groupRepository.findByName(userDto.getGroup());
+        if (!role.equals(null) || !group.equals(null)) {
             throw new ResourceNotFoundException("No Such Role or Group Exists");
         }
         if (!userRepository.findByUsername(userDto.getUsername()).equals(null)) {
@@ -66,8 +65,8 @@ public class UserServiceImpl implements UserService {
                 .phone(userDto.getPhone())
                 .gender(userDto.getGender())
                 .birthday(userDto.getBirthday())
-                .roles(roles)
-                .groups(groups)
+                .role(role)
+                .group(group)
                 .build();
 
         return userRepository.save(user);
@@ -79,8 +78,8 @@ public class UserServiceImpl implements UserService {
                 () -> new ResourceNotFoundException("No Such User Exists")
         );
 
-        Set<Role> roles = (Set<Role>) roleRepository.findByName(userDto.getRole());
-        Set<Group> groups = (Set<Group>) groupRepository.findByName(userDto.getGroup());
+        Role role = roleRepository.findByName(userDto.getRole());
+        Group group = groupRepository.findByName(userDto.getGroup());
 
         user.setSocialNumber(userDto.getSocialNumber());
         user.setFirstname(userDto.getFirstname());
@@ -91,8 +90,8 @@ public class UserServiceImpl implements UserService {
         user.setPhone(userDto.getPhone());
         user.setGender(userDto.getGender());
         user.setBirthday(userDto.getBirthday());
-        user.setRoles(roles);
-        user.setGroups(groups);
+        user.setRole(role);
+        user.setGroup(group);
 
         return userRepository.save(user);
     }

@@ -1,8 +1,6 @@
 package com.euce.dessert.dto.jwt;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 

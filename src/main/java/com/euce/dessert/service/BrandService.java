@@ -2,7 +2,6 @@ package com.euce.dessert.service;
 
 import com.euce.dessert.dto.BrandDto;
 import com.euce.dessert.model.Brand;
-import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

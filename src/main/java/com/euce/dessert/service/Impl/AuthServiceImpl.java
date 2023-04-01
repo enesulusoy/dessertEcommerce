@@ -8,8 +8,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 @Service
 @Transactional(rollbackFor = Exception.class)
 public class AuthServiceImpl {
@@ -26,7 +24,7 @@ public class AuthServiceImpl {
     public User login(JwtRequest jwtRequest) {
         if (!this.isUsernameExists(jwtRequest.getUsername())) {
             User user = userRepository.findByUsername(jwtRequest.getUsername());
-            if(passwordEncoder.matches(user.getPassword(), jwtRequest.getPassword())) {
+            if(passwordEncoder.matches(jwtRequest.getPassword(), user.getPassword())) {
                 return user;
             }
         }

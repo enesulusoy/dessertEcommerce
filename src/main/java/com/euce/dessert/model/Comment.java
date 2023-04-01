@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import java.io.Serializable;
 
@@ -16,6 +18,8 @@ import java.io.Serializable;
 @Table(name="comments")
 @NoArgsConstructor
 @AllArgsConstructor
+@SQLDelete(sql = "UPDATE comments SET deleted=true WHERE id=?")
+@Where(clause = "deleted = false")
 public class Comment implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,6 +34,9 @@ public class Comment implements Serializable {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @Column(name = "deleted")
+    private Boolean deleted;
 
     @ManyToOne
     @JoinColumn(name = "product_id")

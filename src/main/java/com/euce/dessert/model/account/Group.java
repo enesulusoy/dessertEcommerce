@@ -1,15 +1,16 @@
 package com.euce.dessert.model.account;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 @Data
 @Entity
 @Table(name="groups")
+@SQLDelete(sql = "UPDATE groups SET deleted=true WHERE id=?")
+@Where(clause = "deleted = false")
 public class Group {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,19 +19,9 @@ public class Group {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @ManyToMany(mappedBy = "groups")
-    @JsonIgnore
-    private Set<User> users = new HashSet<>();
+    @Column(name = "description")
+    private String description;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "groups_privileges",
-            joinColumns = {
-                    @JoinColumn(name = "group_id")
-            },
-            inverseJoinColumns = {
-                    @JoinColumn(name = "privilege_id")
-            }
-    )
-    private Set<Privilege> privileges = new HashSet<>();
+    @Column(name = "deleted", nullable = false)
+    private Boolean deleted;
 }

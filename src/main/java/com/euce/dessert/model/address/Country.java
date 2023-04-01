@@ -5,7 +5,6 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Data
@@ -58,9 +57,9 @@ public class Country implements Serializable {
     @Column(name = "longitude")
     private Integer longitude;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "country")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "country")
     private Set<Address> addresses = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "country")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "country")
     private Set<City> cities = new HashSet<>();
 }

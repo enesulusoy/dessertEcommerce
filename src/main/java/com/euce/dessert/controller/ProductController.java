@@ -6,6 +6,7 @@ import com.euce.dessert.service.ProductService;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,18 +35,21 @@ public class ProductController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAnyAuthority('PRODUCT_CREATE')")
     public ResponseEntity<String> createProduct(@Valid @RequestBody ProductDto productDto) {
         Product product =  productService.saveProduct(productDto);
         return ResponseEntity.ok("Product Created Successfully");
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('PRODUCT_CREATE')")
     public ResponseEntity<String> updateProduct(@PathVariable Long id, @Valid @RequestBody ProductDto productDto) {
         Product product = productService.updateProduct(id, productDto);
         return ResponseEntity.ok("Product Updated Successfully");
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('PRODUCT_DELETE')")
     public ResponseEntity<String> deleteProduct(@PathVariable Long id) {
         productService.deleteProduct(id);
         return ResponseEntity.ok("Product Deleted Successfully");

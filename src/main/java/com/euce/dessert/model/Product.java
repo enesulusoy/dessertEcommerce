@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -17,6 +19,8 @@ import java.util.Set;
 @Table(name="products")
 @NoArgsConstructor
 @AllArgsConstructor
+@SQLDelete(sql = "UPDATE products SET deleted=true WHERE id=?")
+@Where(clause = "deleted = false")
 public class Product implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,6 +50,9 @@ public class Product implements Serializable {
     @Column(name = "stock_quantity")
     private int stockQuantity;
 
+    @Column(name = "deleted")
+    private Boolean deleted;
+
     @ManyToOne
     @JoinColumn(name = "brand_id")
     private Brand brand;
@@ -54,6 +61,6 @@ public class Product implements Serializable {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "product")
     private Set<Comment> comments = new HashSet<>();
 }
